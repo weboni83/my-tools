@@ -4,6 +4,7 @@ using DevExpress.XtraBars.Helpers;
 using DevExpress.XtraBars.Ribbon;
 using System;
 using System.Data;
+using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using static DevExpress.XtraExport.Helpers.TableRowControl;
@@ -12,10 +13,12 @@ namespace ExcelToSQL
 {
     public partial class FrmMain : RibbonForm
     {
+        string _currentFilePath = string.Empty;
         enum BUTTON
         {
             FILE_OPEN = 62,
             CREATION_SCRIPT = 63,
+            FILE_RELOAD = 64,
         }
         public FrmMain()
         {
@@ -36,6 +39,11 @@ namespace ExcelToSQL
                         if (richEditControlScriptText.Text.Length > 0)
                             dockPanel1.ShowSliding();
 
+                        break;
+                    case (int)BUTTON.FILE_RELOAD:
+                        if(string.IsNullOrEmpty(_currentFilePath))
+                            break;
+                        spreadsheetControl.LoadDocument(_currentFilePath);
                         break;
                     default:
                         DevExpress.XtraBars.Docking2010.Customization.FlyoutDialog.Show(this, e.Item.Id.ToString(), MessageBoxButtons.OK);
@@ -58,7 +66,23 @@ namespace ExcelToSQL
             if(result != DialogResult.OK)
                 return;
 
-            spreadsheetControl.LoadDocument(openFileDialog.FileName);
+            try
+            {
+                if(!File.Exists(openFileDialog.FileName))
+                    throw new FileLoadException($"{openFileDialog.FileName} 경로 파일을 열 수 없습니다.");
+
+                _currentFilePath = openFileDialog.FileName;
+
+                spreadsheetControl.LoadDocument(_currentFilePath);
+            }
+            catch(Exception e)
+            {
+                DevExpress.XtraBars.Docking2010.Customization.FlyoutDialog.Show(this, e.Message, MessageBoxButtons.OK);
+            }
+            finally
+            {
+
+            }
         }
 
         void CreationScript()

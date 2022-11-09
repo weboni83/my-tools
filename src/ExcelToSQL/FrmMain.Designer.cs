@@ -45,6 +45,8 @@
             this.siInfo = new DevExpress.XtraBars.BarStaticItem();
             this.rgbiSkins = new DevExpress.XtraBars.RibbonGalleryBarItem();
             this.iOpenFile = new DevExpress.XtraBars.BarButtonItem();
+            this.iCreationScript = new DevExpress.XtraBars.BarButtonItem();
+            this.iReloadFile = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonImageCollectionLarge = new DevExpress.Utils.ImageCollection(this.components);
             this.ribbonPageSkins = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.skinsRibbonPageGroup = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -52,6 +54,7 @@
             this.helpRibbonPageGroup = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.FileRibbonPage = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.fileRibbonPageGroup = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.ScriptRibbonPageGroup = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             this.spreadsheetFormulaBarPanel = new System.Windows.Forms.Panel();
             this.spreadsheetControl = new DevExpress.XtraSpreadsheet.SpreadsheetControl();
@@ -59,8 +62,6 @@
             this.formulaBarNameBoxSplitContainerControl = new DevExpress.XtraEditors.SplitContainerControl();
             this.spreadsheetNameBoxControl = new DevExpress.XtraSpreadsheet.SpreadsheetNameBoxControl();
             this.spreadsheetFormulaBarControl1 = new DevExpress.XtraSpreadsheet.SpreadsheetFormulaBarControl();
-            this.ScriptRibbonPageGroup = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.iCreationScript = new DevExpress.XtraBars.BarButtonItem();
             this.richEditControlScriptText = new DevExpress.XtraRichEdit.RichEditControl();
             this.dockManager1 = new DevExpress.XtraBars.Docking.DockManager(this.components);
             this.dockPanel1 = new DevExpress.XtraBars.Docking.DockPanel();
@@ -98,10 +99,11 @@
             this.siInfo,
             this.rgbiSkins,
             this.iOpenFile,
-            this.iCreationScript});
+            this.iCreationScript,
+            this.iReloadFile});
             this.ribbonControl.LargeImages = this.ribbonImageCollectionLarge;
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl.MaxItemId = 64;
+            this.ribbonControl.MaxItemId = 65;
             this.ribbonControl.Name = "ribbonControl";
             this.ribbonControl.PageHeaderItemLinks.Add(this.iAbout);
             this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -245,7 +247,7 @@
             // 
             // iOpenFile
             // 
-            this.iOpenFile.Caption = "File Open";
+            this.iOpenFile.Caption = "Open";
             this.iOpenFile.Description = "Open Excel File";
             this.iOpenFile.Hint = "Open Excel File";
             this.iOpenFile.Id = 62;
@@ -254,6 +256,31 @@
             this.iOpenFile.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O));
             this.iOpenFile.Name = "iOpenFile";
             this.iOpenFile.ShortcutKeyDisplayString = "Ctrl+O";
+            // 
+            // iCreationScript
+            // 
+            this.iCreationScript.Caption = "SQL Creation";
+            this.iCreationScript.Description = "Creation SQL Script.";
+            this.iCreationScript.Hint = "Creation SQL Script.";
+            this.iCreationScript.Id = 63;
+            this.iCreationScript.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("iCreationScript.ImageOptions.Image")));
+            this.iCreationScript.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("iCreationScript.ImageOptions.LargeImage")));
+            this.iCreationScript.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+                | System.Windows.Forms.Keys.C));
+            this.iCreationScript.Name = "iCreationScript";
+            this.iCreationScript.ShortcutKeyDisplayString = "Ctrl+Shift+C";
+            this.iCreationScript.ShowItemShortcut = DevExpress.Utils.DefaultBoolean.True;
+            // 
+            // iReloadFile
+            // 
+            this.iReloadFile.Caption = "Reload";
+            this.iReloadFile.Id = 64;
+            this.iReloadFile.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("iReloadFile.ImageOptions.Image")));
+            this.iReloadFile.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("iReloadFile.ImageOptions.LargeImage")));
+            this.iReloadFile.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R));
+            this.iReloadFile.Name = "iReloadFile";
+            this.iReloadFile.ShortcutKeyDisplayString = "Ctrl+R";
+            this.iReloadFile.ShowItemShortcut = DevExpress.Utils.DefaultBoolean.True;
             // 
             // ribbonImageCollectionLarge
             // 
@@ -302,8 +329,15 @@
             // fileRibbonPageGroup
             // 
             this.fileRibbonPageGroup.ItemLinks.Add(this.iOpenFile);
+            this.fileRibbonPageGroup.ItemLinks.Add(this.iReloadFile);
             this.fileRibbonPageGroup.Name = "fileRibbonPageGroup";
             this.fileRibbonPageGroup.Text = "File";
+            // 
+            // ScriptRibbonPageGroup
+            // 
+            this.ScriptRibbonPageGroup.ItemLinks.Add(this.iCreationScript);
+            this.ScriptRibbonPageGroup.Name = "ScriptRibbonPageGroup";
+            this.ScriptRibbonPageGroup.Text = "Script";
             // 
             // ribbonStatusBar
             // 
@@ -381,26 +415,6 @@
             this.spreadsheetFormulaBarControl1.SpreadsheetControl = this.spreadsheetControl;
             this.spreadsheetFormulaBarControl1.TabIndex = 0;
             // 
-            // ScriptRibbonPageGroup
-            // 
-            this.ScriptRibbonPageGroup.ItemLinks.Add(this.iCreationScript);
-            this.ScriptRibbonPageGroup.Name = "ScriptRibbonPageGroup";
-            this.ScriptRibbonPageGroup.Text = "Script";
-            // 
-            // iCreationScript
-            // 
-            this.iCreationScript.Caption = "SQL Creation";
-            this.iCreationScript.Description = "Creation SQL Script.";
-            this.iCreationScript.Hint = "Creation SQL Script.";
-            this.iCreationScript.Id = 63;
-            this.iCreationScript.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("iCreationScript.ImageOptions.Image")));
-            this.iCreationScript.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("iCreationScript.ImageOptions.LargeImage")));
-            this.iCreationScript.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-                | System.Windows.Forms.Keys.C));
-            this.iCreationScript.Name = "iCreationScript";
-            this.iCreationScript.ShortcutKeyDisplayString = "Ctrl+Shift+C";
-            this.iCreationScript.ShowItemShortcut = DevExpress.Utils.DefaultBoolean.True;
-            // 
             // richEditControlScriptText
             // 
             this.richEditControlScriptText.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -446,7 +460,7 @@
             this.dockPanel1_Container.Size = new System.Drawing.Size(458, 495);
             this.dockPanel1_Container.TabIndex = 0;
             // 
-            // Form1
+            // FrmMain
             // 
             this.AllowFormGlass = DevExpress.Utils.DefaultBoolean.False;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -458,10 +472,11 @@
             this.Controls.Add(this.dockPanel1);
             this.Controls.Add(this.ribbonStatusBar);
             this.Controls.Add(this.ribbonControl);
-            this.Name = "Form1";
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "FrmMain";
             this.Ribbon = this.ribbonControl;
             this.StatusBar = this.ribbonStatusBar;
-            this.Text = "Form1";
+            this.Text = "My Tools";
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.appMenu)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.popupControlContainer2)).EndInit();
@@ -521,5 +536,6 @@
         private DevExpress.XtraBars.Docking.DockManager dockManager1;
         private DevExpress.XtraBars.Docking.DockPanel dockPanel1;
         private DevExpress.XtraBars.Docking.ControlContainer dockPanel1_Container;
+        private DevExpress.XtraBars.BarButtonItem iReloadFile;
     }
 }
