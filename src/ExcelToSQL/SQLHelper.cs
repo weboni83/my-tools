@@ -86,8 +86,15 @@ namespace ExcelToSQL
                                 break;
                         }
 
-                        if (dataType == "string")
-                            values.Append($"'{row[column.ColumnName]}'");
+                        if(dataType == "string")
+                        {
+                            string value = row[column.ColumnName].ToString();
+                            if (value.ToUpper() == "NULL")
+                                values.Append(value);
+                            else
+                                values.Append($"'{value}'");
+
+                        }
                         else
                             values.Append(row[column.ColumnName]);
                     }
