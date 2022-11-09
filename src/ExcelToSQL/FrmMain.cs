@@ -4,6 +4,7 @@ using DevExpress.XtraBars.Helpers;
 using DevExpress.XtraBars.Ribbon;
 using System;
 using System.Data;
+using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -16,6 +17,8 @@ namespace ExcelToSQL
         string _currentFilePath = string.Empty;
         enum BUTTON
         {
+            SOME_STATUS = 31,
+            SOME_INFO = 32,
             FILE_OPEN = 62,
             CREATION_SCRIPT = 63,
             FILE_RELOAD = 64,
@@ -34,7 +37,6 @@ namespace ExcelToSQL
                         FileOpen();
                         break;
                     case (int)BUTTON.CREATION_SCRIPT:
-                        //CreationScript();
                         richEditControlScriptText.Text = CreationDataTable();
                         if (richEditControlScriptText.Text.Length > 0)
                             dockPanel1.ShowSliding();
@@ -45,11 +47,42 @@ namespace ExcelToSQL
                             break;
                         spreadsheetControl.LoadDocument(_currentFilePath);
                         break;
+                    case (int)BUTTON.SOME_STATUS:
+                        break;
+                    case (int)BUTTON.SOME_INFO:
+                        this.Capture = true;
+                        break;
                     default:
                         DevExpress.XtraBars.Docking2010.Customization.FlyoutDialog.Show(this, e.Item.Id.ToString(), MessageBoxButtons.OK);
                         break;
                 }
 
+            };
+
+            this.Load += (s, e) =>
+            {
+            };
+
+            this.Activated += (s, e) =>
+            {
+            };
+
+            this.Shown += (s, e) =>
+            {
+
+            };
+
+            this.MouseMove += (s, e) =>
+            {
+                Control ctl = ControlHelper.FindControlAtPoint(this, Control.MousePosition);
+                if(ctl == null)
+                    return;
+
+                this.siInfo.BeginUpdate();
+                this.siInfo.Caption = ctl.Name;
+                this.siInfo.EndUpdate();
+                if (!string.IsNullOrEmpty(ctl.Name))
+                    Clipboard.SetText(ctl.Name);
             };
         }
         void InitSkinGallery()
