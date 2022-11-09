@@ -7,6 +7,7 @@ namespace ExcelToSQL
 {
     static class SQLHelper
     {
+        const string NULL = "NULL";
         public static string BuildInsertAdhocSQL(DataTable table)
         {
             StringBuilder rows = new StringBuilder();
@@ -89,7 +90,7 @@ namespace ExcelToSQL
                         if(dataType == "string")
                         {
                             string value = row[column.ColumnName].ToString();
-                            if (value.ToUpper() == "NULL")
+                            if (value.ToUpper() ==NULL)
                                 values.Append(value);
                             else
                                 values.Append($"'{value}'");
