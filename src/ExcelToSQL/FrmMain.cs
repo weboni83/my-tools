@@ -22,6 +22,7 @@ namespace ExcelToSQL
             FILE_OPEN = 62,
             CREATION_SCRIPT = 63,
             FILE_RELOAD = 64,
+            CONVERT_SQL = 65,
         }
         public FrmMain()
         {
@@ -40,8 +41,16 @@ namespace ExcelToSQL
                         richEditControlScriptText.Text = CreationDataTable();
                         if (richEditControlScriptText.Text.Length > 0)
                             dockPanel1.ShowSliding();
-
                         break;
+                    case (int)BUTTON.CONVERT_SQL:
+                        richEditControlScriptText.Text = ConvertExecutesqlToQuery();
+                        if(richEditControlScriptText.Text.Length > 0)
+                        {
+                            Clipboard.SetText(richEditControlScriptText.Text);
+                            dockPanel1.ShowSliding();
+                        }
+                        break;
+
                     case (int)BUTTON.FILE_RELOAD:
                         if(string.IsNullOrEmpty(_currentFilePath))
                             break;
@@ -81,8 +90,13 @@ namespace ExcelToSQL
                 this.siInfo.BeginUpdate();
                 this.siInfo.Caption = ctl.Name;
                 this.siInfo.EndUpdate();
-                if (!string.IsNullOrEmpty(ctl.Name))
-                    Clipboard.SetText(ctl.Name);
+
+            };
+
+            this.MouseCaptureChanged += (s, e) =>
+            {
+                if(!string.IsNullOrEmpty(this.siInfo.Caption))
+                    Clipboard.SetText(this.siInfo.Caption);
             };
         }
         void InitSkinGallery()
@@ -214,7 +228,36 @@ namespace ExcelToSQL
                 // all Querys
                 scriptText = SQLHelper.BuildInsertAdhocSQL(dataTable);
 
-            } catch (Exception e)
+            }
+            catch (Exception e)
+            {
+                DevExpress.XtraBars.Docking2010.Customization.FlyoutDialog.Show(this, e.Message, MessageBoxButtons.OK);
+            }
+            finally
+            {
+
+            }
+
+            return scriptText;
+        }
+
+        string ConvertExecutesqlToQuery()
+        {
+            var scriptText = string.Empty;
+
+            try
+            {
+                var originalText = string.Empty;
+                if(richEditControlScriptText.Document.Selection.Length > 0)
+                    originalText = richEditControlScriptText.Document.GetText(richEditControlScriptText.Document.Selection);
+
+                if (string.IsNullOrEmpty(originalText))
+                    originalText = Clipboard.GetText(TextDataFormat.Text);
+                    
+
+                scriptText = SQLHelper.ConvertExecuteSqlToNomarlSql(originalText);
+            }
+            catch (Exception e)
             {
                 DevExpress.XtraBars.Docking2010.Customization.FlyoutDialog.Show(this, e.Message, MessageBoxButtons.OK);
             }

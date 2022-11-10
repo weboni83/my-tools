@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace ExcelToSQL
 {
@@ -234,6 +236,36 @@ namespace ExcelToSQL
                 connection.Open();
                 return command.ExecuteScalar();
             }
+        }
+
+        /// <summary>
+        /// convert sp_executesql to nomarl query
+        /// </summary>
+        /// <param name="origSql">sp_executesql</param>
+        /// <returns>query text</returns>
+        public static string ConvertExecuteSqlToNomarlSql(string origSql)
+        {
+            var re = new Regex(@"exec*\s*sp_executesql\s+N'([\s\S]*)',\s*N'(@[\s\S]*?)',\s*([\s\S]*)", RegexOptions.IgnoreCase); // 1: the sql, 2: the declare, 3: the setting
+            var match = re.Match(origSql);
+            if(match.Success)
+            {
+                var sql = match.Groups[1].Value.Replace("''", "'");
+                //var declare = match.Groups[2].Value;
+                var setting = match.Groups[3].Value + ',';
+
+                // to deal with comma or single quote in variable values, we can use the variable name to split
+                var re2 = new Regex(@"@[^',]*?\s*=");
+                var variables = re2.Matches(setting).Cast<Match>().Select(m => m.Value).ToArray();
+                var values = re2.Split(setting).Where(s => !string.IsNullOrWhiteSpace(s)).Select(m => m.Trim(',').Trim().Trim(';')).ToArray();
+                for(int i = variables.Length - 1; i >= 0; i--)
+                {
+                    sql = Regex.Replace(sql, "(" + variables[i].Replace("=", "") + ")", values[i], RegexOptions.Singleline);
+                }
+                return sql;
+            }
+
+            return @"Unknown sql query format.";
+
         }
     }
 }

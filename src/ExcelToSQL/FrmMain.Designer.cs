@@ -66,6 +66,7 @@
             this.dockManager1 = new DevExpress.XtraBars.Docking.DockManager(this.components);
             this.dockPanel1 = new DevExpress.XtraBars.Docking.DockPanel();
             this.dockPanel1_Container = new DevExpress.XtraBars.Docking.ControlContainer();
+            this.iConvertQuery = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.appMenu)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.popupControlContainer2)).BeginInit();
@@ -100,10 +101,11 @@
             this.rgbiSkins,
             this.iOpenFile,
             this.iCreationScript,
-            this.iReloadFile});
+            this.iReloadFile,
+            this.iConvertQuery});
             this.ribbonControl.LargeImages = this.ribbonImageCollectionLarge;
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl.MaxItemId = 65;
+            this.ribbonControl.MaxItemId = 66;
             this.ribbonControl.Name = "ribbonControl";
             this.ribbonControl.PageHeaderItemLinks.Add(this.iAbout);
             this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -266,9 +268,9 @@
             this.iCreationScript.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("iCreationScript.ImageOptions.Image")));
             this.iCreationScript.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("iCreationScript.ImageOptions.LargeImage")));
             this.iCreationScript.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-                | System.Windows.Forms.Keys.C));
+                | System.Windows.Forms.Keys.G));
             this.iCreationScript.Name = "iCreationScript";
-            this.iCreationScript.ShortcutKeyDisplayString = "Ctrl+Shift+C";
+            this.iCreationScript.ShortcutKeyDisplayString = "Ctrl+Shift+G";
             this.iCreationScript.ShowItemShortcut = DevExpress.Utils.DefaultBoolean.True;
             // 
             // iReloadFile
@@ -336,6 +338,7 @@
             // ScriptRibbonPageGroup
             // 
             this.ScriptRibbonPageGroup.ItemLinks.Add(this.iCreationScript);
+            this.ScriptRibbonPageGroup.ItemLinks.Add(this.iConvertQuery);
             this.ScriptRibbonPageGroup.Name = "ScriptRibbonPageGroup";
             this.ScriptRibbonPageGroup.Text = "Script";
             // 
@@ -460,6 +463,17 @@
             this.dockPanel1_Container.Size = new System.Drawing.Size(458, 495);
             this.dockPanel1_Container.TabIndex = 0;
             // 
+            // iConvertQuery
+            // 
+            this.iConvertQuery.Caption = "Convert";
+            this.iConvertQuery.Description = "Convert sp_executesql to query";
+            this.iConvertQuery.Id = 65;
+            this.iConvertQuery.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("iConvertQuery.ImageOptions.Image")));
+            this.iConvertQuery.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("iConvertQuery.ImageOptions.LargeImage")));
+            this.iConvertQuery.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+                | System.Windows.Forms.Keys.C));
+            this.iConvertQuery.Name = "iConvertQuery";
+            // 
             // FrmMain
             // 
             this.AllowFormGlass = DevExpress.Utils.DefaultBoolean.False;
@@ -537,5 +551,6 @@
         private DevExpress.XtraBars.Docking.DockPanel dockPanel1;
         private DevExpress.XtraBars.Docking.ControlContainer dockPanel1_Container;
         private DevExpress.XtraBars.BarButtonItem iReloadFile;
+        private DevExpress.XtraBars.BarButtonItem iConvertQuery;
     }
 }
