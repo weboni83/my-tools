@@ -81,8 +81,10 @@ namespace ExcelToSQL
                                 break;
                             case "String":
                             case "Char":
-                            case "DateTime":
                                 dataType = "string";
+                                break;
+                            case "DateTime":
+                                dataType = "datetime";
                                 break;
                             default:
                                 dataType = "string";
@@ -97,6 +99,14 @@ namespace ExcelToSQL
                             else
                                 values.Append($"'{value}'");
 
+                        }
+                        else if (dataType == "datetime")
+                        {
+                            string value = row[column.ColumnName].ToString();
+                            if (DateTime.TryParse(value, out var date))
+                                values.Append($"'{date.ToString("yyyy-MM-dd HH:mm:ss")}'");
+                            else
+                                values.Append($"'{value}'");
                         }
                         else
                             values.Append(row[column.ColumnName]);

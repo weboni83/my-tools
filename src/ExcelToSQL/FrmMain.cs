@@ -4,16 +4,20 @@ using DevExpress.XtraBars.Helpers;
 using DevExpress.XtraBars.Ribbon;
 using System;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
+using Presentation.Views.Upgrade;
 using static DevExpress.XtraExport.Helpers.TableRowControl;
+using Presentation.Views.Excel;
 
 namespace ExcelToSQL
 {
     public partial class FrmMain : RibbonForm
     {
+        const string CONNECTION_STRING = "Data Source=localhost;Initial Catalog=TEST;Persist Security Info=True;User ID=sa;Password=password;";
         string _currentFilePath = string.Empty;
         enum BUTTON
         {
@@ -23,6 +27,8 @@ namespace ExcelToSQL
             CREATION_SCRIPT = 63,
             FILE_RELOAD = 64,
             CONVERT_SQL = 65,
+            LOAD_UPGRADE_FORM = 66,
+            LOAD_ERBVIEWER_FORM = 67,
         }
         public FrmMain()
         {
@@ -40,14 +46,14 @@ namespace ExcelToSQL
                     case (int)BUTTON.CREATION_SCRIPT:
                         richEditControlScriptText.Text = CreationDataTable();
                         if (richEditControlScriptText.Text.Length > 0)
-                            dockPanel1.ShowSliding();
+                            dockPanel_script.ShowSliding();
                         break;
                     case (int)BUTTON.CONVERT_SQL:
                         richEditControlScriptText.Text = ConvertExecutesqlToQuery();
                         if(richEditControlScriptText.Text.Length > 0)
                         {
                             Clipboard.SetText(richEditControlScriptText.Text);
-                            dockPanel1.ShowSliding();
+                            dockPanel_script.ShowSliding();
                         }
                         break;
 
@@ -61,6 +67,19 @@ namespace ExcelToSQL
                     case (int)BUTTON.SOME_INFO:
                         this.Capture = true;
                         break;
+                    case (int)BUTTON.LOAD_UPGRADE_FORM:
+                        Form form = new Form();
+                        form.Controls.Add(new UpgradeForm() { Dock = DockStyle.Fill });
+                        form.Show();
+                        break;
+                    case (int)BUTTON.LOAD_ERBVIEWER_FORM:
+                        var uctrl = new EBRViewer() { Dock = DockStyle.Fill };
+                        uctrl.ExceptionTrigger += (s1, e1)=> { MessageShowOK(e1.Message); };
+                        Form formEBR = new Form();
+                        formEBR.Size = new Size(1024, 768);
+                        formEBR.Controls.Add(uctrl);
+                        formEBR.Show();
+                        break;
                     default:
                         DevExpress.XtraBars.Docking2010.Customization.FlyoutDialog.Show(this, e.Item.Id.ToString(), MessageBoxButtons.OK);
                         break;
@@ -70,6 +89,19 @@ namespace ExcelToSQL
 
             this.Load += (s, e) =>
             {
+                try
+                {
+                    SqlDependency.Start(CONNECTION_STRING);
+                    this.GetData();
+                }
+                catch (Exception ex)
+                {
+                    DevExpress.XtraBars.Docking2010.Customization.FlyoutDialog.Show(this, ex.Message, MessageBoxButtons.OK);
+                }
+                finally
+                {
+
+                }
             };
 
             this.Activated += (s, e) =>
@@ -98,10 +130,80 @@ namespace ExcelToSQL
                 if(!string.IsNullOrEmpty(this.siInfo.Caption))
                     Clipboard.SetText(this.siInfo.Caption);
             };
+
+            this.FormClosing += (s, e) =>
+            {
+                SqlDependency.Stop(CONNECTION_STRING);
+            };
         }
+
+        void MessageShowOK(string message)
+        {
+            DevExpress.XtraBars.Docking2010.Customization.FlyoutDialog.Show(this, message, MessageBoxButtons.OK);
+        }
+
         void InitSkinGallery()
         {
             SkinHelper.InitSkinGallery(rgbiSkins, true);
+        }
+
+        void GetData()
+        {
+            string sql = @"SELECT [MESSAGE_ID]
+,[SENDER_ID]
+,[RECEIVER_ID]
+,[CONTENT]
+,SEND_DT
+,CONVERT(VARCHAR(10), SEND_DT, 120) as GROUP_DT
+,CONFIRMED
+,CONFIRM_DT
+FROM[dbo].[SYS_MESSAGE]
+ORDER BY SEND_DT DESC
+";
+
+            using(SqlConnection conn = new SqlConnection(CONNECTION_STRING))
+            {
+                conn.Open();
+                var cmd = new SqlCommand(sql, conn);
+                // (optional) 이전 Notification 삭제
+                cmd.Notification = null;
+
+                // SqlDependency객체 생성
+                var sqlDependency = new SqlDependency(cmd);
+                // SqlDependency.OnChange 이벤트 핸들러 지정
+                sqlDependency.OnChange += new OnChangeEventHandler(Dependency_OnChange);
+
+                // cmd 객체 SQL 실행, 데이타 Fetch
+                SqlDataReader rdr = cmd.ExecuteReader();
+
+                // 그리드에 결과 표시
+                DataTable dt = new DataTable();
+                dt.Load(rdr);
+                gridControl1.DataSource = dt;
+            }
+        }
+
+        private void Dependency_OnChange(object sender, SqlNotificationEventArgs e)
+        {
+            if(e.Info.ToString().StartsWith("Invalid")) // 에러
+            {
+                DevExpress.XtraBars.Docking2010.Customization.FlyoutDialog.Show(this, e.Info.ToString(), MessageBoxButtons.OK);
+                return;
+            }
+
+
+            if(this.InvokeRequired)
+            {
+                this.Invoke((MethodInvoker)delegate 
+                {
+                    GetData();
+                    dockPanel_messages.ShowSliding();
+                });
+            }
+            else
+            {
+                GetData();
+            }
         }
 
         void FileOpen()
