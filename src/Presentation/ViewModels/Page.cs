@@ -11,6 +11,7 @@ namespace Presentation.ViewModels
         public virtual int Index { get; set; }
         public virtual int PysicalNumber { get; set; }
         public virtual int LogicalNumber { get; set; }
+        public virtual string Chapter { get; set; }
         public virtual string Description { get; set; }
     }
 }

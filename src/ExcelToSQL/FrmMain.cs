@@ -17,7 +17,7 @@ namespace ExcelToSQL
 {
     public partial class FrmMain : RibbonForm
     {
-        const string CONNECTION_STRING = "Data Source=localhost;Initial Catalog=TEST;Persist Security Info=True;User ID=sa;Password=password;";
+        const string CONNECTION_STRING = "";
         string _currentFilePath = string.Empty;
         enum BUTTON
         {
