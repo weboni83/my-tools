@@ -7,8 +7,8 @@
     <ProjectGuid>{2E013B70-BAF5-4BD3-A22C-BD07E291144D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Presentation.Views.Upgrade</RootNamespace>
-    <AssemblyName>Presentation.Views.Upgrade</AssemblyName>
+    <RootNamespace>Presenter.Views.Upgrade</RootNamespace>
+    <AssemblyName>Presenter.Views.Upgrade</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

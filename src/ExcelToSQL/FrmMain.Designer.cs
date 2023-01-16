@@ -28,17 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.ribbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
-            this.appMenu = new DevExpress.XtraBars.Ribbon.ApplicationMenu(this.components);
-            this.popupControlContainer2 = new DevExpress.XtraBars.PopupControlContainer(this.components);
-            this.buttonEdit = new DevExpress.XtraEditors.ButtonEdit();
+            this.appMenu = new DevExpress.XtraBars.Ribbon.ApplicationMenu();
             this.iExit = new DevExpress.XtraBars.BarButtonItem();
-            this.popupControlContainer1 = new DevExpress.XtraBars.PopupControlContainer(this.components);
+            this.popupControlContainer1 = new DevExpress.XtraBars.PopupControlContainer();
             this.someLabelControl2 = new DevExpress.XtraEditors.LabelControl();
             this.someLabelControl1 = new DevExpress.XtraEditors.LabelControl();
-            this.ribbonImageCollection = new DevExpress.Utils.ImageCollection(this.components);
+            this.ribbonImageCollection = new DevExpress.Utils.ImageCollection();
             this.iHelp = new DevExpress.XtraBars.BarButtonItem();
             this.iAbout = new DevExpress.XtraBars.BarButtonItem();
             this.siStatus = new DevExpress.XtraBars.BarStaticItem();
@@ -49,7 +46,8 @@
             this.iReloadFile = new DevExpress.XtraBars.BarButtonItem();
             this.iConvertQuery = new DevExpress.XtraBars.BarButtonItem();
             this.iLoadUpgradeHistoryForm = new DevExpress.XtraBars.BarButtonItem();
-            this.ribbonImageCollectionLarge = new DevExpress.Utils.ImageCollection(this.components);
+            this.iLoadEBRViewerForm = new DevExpress.XtraBars.BarButtonItem();
+            this.ribbonImageCollectionLarge = new DevExpress.Utils.ImageCollection();
             this.ribbonPageSkins = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.skinsRibbonPageGroup = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.helpRibbonPage = new DevExpress.XtraBars.Ribbon.RibbonPage();
@@ -59,6 +57,8 @@
             this.ScriptRibbonPageGroup = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.DeployRibbonPage = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.DeployRibbonPageGroup = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.ExcelRibbonPage = new DevExpress.XtraBars.Ribbon.RibbonPage();
+            this.ExcelRibbonPageGroup = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             this.spreadsheetFormulaBarPanel = new System.Windows.Forms.Panel();
             this.spreadsheetControl = new DevExpress.XtraSpreadsheet.SpreadsheetControl();
@@ -67,7 +67,7 @@
             this.spreadsheetNameBoxControl = new DevExpress.XtraSpreadsheet.SpreadsheetNameBoxControl();
             this.spreadsheetFormulaBarControl1 = new DevExpress.XtraSpreadsheet.SpreadsheetFormulaBarControl();
             this.richEditControlScriptText = new DevExpress.XtraRichEdit.RichEditControl();
-            this.dockManager1 = new DevExpress.XtraBars.Docking.DockManager(this.components);
+            this.dockManager1 = new DevExpress.XtraBars.Docking.DockManager();
             this.dockPanel_script = new DevExpress.XtraBars.Docking.DockPanel();
             this.dockPanel1_Container = new DevExpress.XtraBars.Docking.ControlContainer();
             this.dockPanel_messages = new DevExpress.XtraBars.Docking.DockPanel();
@@ -83,14 +83,11 @@
             this.col_GROUP_DT = new DevExpress.XtraGrid.Columns.GridColumn();
             this.col_SEND_DT = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.ExcelRibbonPage = new DevExpress.XtraBars.Ribbon.RibbonPage();
-            this.ExcelRibbonPageGroup = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.iLoadEBRViewerForm = new DevExpress.XtraBars.BarButtonItem();
+            this.PDFRibbonPage = new DevExpress.XtraBars.Ribbon.RibbonPage();
+            this.PDFRibbonPageGroup = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.iLoadPDFViewerForm = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.appMenu)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.popupControlContainer2)).BeginInit();
-            this.popupControlContainer2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.buttonEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.popupControlContainer1)).BeginInit();
             this.popupControlContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonImageCollection)).BeginInit();
@@ -128,10 +125,11 @@
             this.iReloadFile,
             this.iConvertQuery,
             this.iLoadUpgradeHistoryForm,
-            this.iLoadEBRViewerForm});
+            this.iLoadEBRViewerForm,
+            this.iLoadPDFViewerForm});
             this.ribbonControl.LargeImages = this.ribbonImageCollectionLarge;
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl.MaxItemId = 68;
+            this.ribbonControl.MaxItemId = 69;
             this.ribbonControl.Name = "ribbonControl";
             this.ribbonControl.PageHeaderItemLinks.Add(this.iAbout);
             this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -139,7 +137,8 @@
             this.helpRibbonPage,
             this.FileRibbonPage,
             this.DeployRibbonPage,
-            this.ExcelRibbonPage});
+            this.ExcelRibbonPage,
+            this.PDFRibbonPage});
             this.ribbonControl.QuickToolbarItemLinks.Add(this.iHelp);
             this.ribbonControl.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.Office2010;
             this.ribbonControl.Size = new System.Drawing.Size(1100, 147);
@@ -147,36 +146,11 @@
             // 
             // appMenu
             // 
-            this.appMenu.BottomPaneControlContainer = this.popupControlContainer2;
             this.appMenu.ItemLinks.Add(this.iExit);
             this.appMenu.Name = "appMenu";
             this.appMenu.Ribbon = this.ribbonControl;
             this.appMenu.RightPaneControlContainer = this.popupControlContainer1;
             this.appMenu.ShowRightPane = true;
-            // 
-            // popupControlContainer2
-            // 
-            this.popupControlContainer2.Appearance.BackColor = System.Drawing.Color.Transparent;
-            this.popupControlContainer2.Appearance.Options.UseBackColor = true;
-            this.popupControlContainer2.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
-            this.popupControlContainer2.Controls.Add(this.buttonEdit);
-            this.popupControlContainer2.Location = new System.Drawing.Point(238, 289);
-            this.popupControlContainer2.Name = "popupControlContainer2";
-            this.popupControlContainer2.Ribbon = this.ribbonControl;
-            this.popupControlContainer2.Size = new System.Drawing.Size(118, 28);
-            this.popupControlContainer2.TabIndex = 3;
-            this.popupControlContainer2.Visible = false;
-            // 
-            // buttonEdit
-            // 
-            this.buttonEdit.EditValue = "Some Text";
-            this.buttonEdit.Location = new System.Drawing.Point(3, 5);
-            this.buttonEdit.MenuManager = this.ribbonControl;
-            this.buttonEdit.Name = "buttonEdit";
-            this.buttonEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
-            this.buttonEdit.Size = new System.Drawing.Size(100, 20);
-            this.buttonEdit.TabIndex = 0;
             // 
             // iExit
             // 
@@ -331,6 +305,14 @@
             this.iLoadUpgradeHistoryForm.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("iLoadUpgradeHistoryForm.ImageOptions.LargeImage")));
             this.iLoadUpgradeHistoryForm.Name = "iLoadUpgradeHistoryForm";
             // 
+            // iLoadEBRViewerForm
+            // 
+            this.iLoadEBRViewerForm.Caption = "EBR 뷰어";
+            this.iLoadEBRViewerForm.Id = 67;
+            this.iLoadEBRViewerForm.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("iLoadEBRViewerForm.ImageOptions.Image")));
+            this.iLoadEBRViewerForm.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("iLoadEBRViewerForm.ImageOptions.LargeImage")));
+            this.iLoadEBRViewerForm.Name = "iLoadEBRViewerForm";
+            // 
             // ribbonImageCollectionLarge
             // 
             this.ribbonImageCollectionLarge.ImageSize = new System.Drawing.Size(32, 32);
@@ -401,6 +383,19 @@
             this.DeployRibbonPageGroup.ItemLinks.Add(this.iLoadUpgradeHistoryForm);
             this.DeployRibbonPageGroup.Name = "DeployRibbonPageGroup";
             this.DeployRibbonPageGroup.Text = "Deploy";
+            // 
+            // ExcelRibbonPage
+            // 
+            this.ExcelRibbonPage.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+            this.ExcelRibbonPageGroup});
+            this.ExcelRibbonPage.Name = "ExcelRibbonPage";
+            this.ExcelRibbonPage.Text = "Excel";
+            // 
+            // ExcelRibbonPageGroup
+            // 
+            this.ExcelRibbonPageGroup.ItemLinks.Add(this.iLoadEBRViewerForm);
+            this.ExcelRibbonPageGroup.Name = "ExcelRibbonPageGroup";
+            this.ExcelRibbonPageGroup.Text = "Excel";
             // 
             // ribbonStatusBar
             // 
@@ -654,26 +649,26 @@
             this.gridView1.Name = "gridView1";
             this.gridView1.OptionsView.ShowGroupPanel = false;
             // 
-            // ExcelRibbonPage
+            // PDFRibbonPage
             // 
-            this.ExcelRibbonPage.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
-            this.ExcelRibbonPageGroup});
-            this.ExcelRibbonPage.Name = "ExcelRibbonPage";
-            this.ExcelRibbonPage.Text = "Excel";
+            this.PDFRibbonPage.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+            this.PDFRibbonPageGroup});
+            this.PDFRibbonPage.Name = "PDFRibbonPage";
+            this.PDFRibbonPage.Text = "PDF";
             // 
-            // ExcelRibbonPageGroup
+            // PDFRibbonPageGroup
             // 
-            this.ExcelRibbonPageGroup.ItemLinks.Add(this.iLoadEBRViewerForm);
-            this.ExcelRibbonPageGroup.Name = "ExcelRibbonPageGroup";
-            this.ExcelRibbonPageGroup.Text = "Excel";
+            this.PDFRibbonPageGroup.ItemLinks.Add(this.iLoadPDFViewerForm);
+            this.PDFRibbonPageGroup.Name = "PDFRibbonPageGroup";
+            this.PDFRibbonPageGroup.Text = "PDF";
             // 
-            // iLoadEBRViewerForm
+            // iLoadPDFViewerForm
             // 
-            this.iLoadEBRViewerForm.Caption = "EBR 뷰어";
-            this.iLoadEBRViewerForm.Id = 67;
-            this.iLoadEBRViewerForm.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("iLoadEBRViewerForm.ImageOptions.Image")));
-            this.iLoadEBRViewerForm.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("iLoadEBRViewerForm.ImageOptions.LargeImage")));
-            this.iLoadEBRViewerForm.Name = "iLoadEBRViewerForm";
+            this.iLoadPDFViewerForm.Caption = "Viewer";
+            this.iLoadPDFViewerForm.Id = 68;
+            this.iLoadPDFViewerForm.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("iLoadPDFViewerForm.ImageOptions.Image")));
+            this.iLoadPDFViewerForm.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("iLoadPDFViewerForm.ImageOptions.LargeImage")));
+            this.iLoadPDFViewerForm.Name = "iLoadPDFViewerForm";
             // 
             // FrmMain
             // 
@@ -683,7 +678,6 @@
             this.ClientSize = new System.Drawing.Size(1100, 700);
             this.Controls.Add(this.spreadsheetFormulaBarPanel);
             this.Controls.Add(this.popupControlContainer1);
-            this.Controls.Add(this.popupControlContainer2);
             this.Controls.Add(this.dockPanel_messages);
             this.Controls.Add(this.dockPanel_script);
             this.Controls.Add(this.ribbonStatusBar);
@@ -695,9 +689,6 @@
             this.Text = "My Tools";
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.appMenu)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.popupControlContainer2)).EndInit();
-            this.popupControlContainer2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.buttonEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.popupControlContainer1)).EndInit();
             this.popupControlContainer1.ResumeLayout(false);
             this.popupControlContainer1.PerformLayout();
@@ -737,8 +728,6 @@
         private DevExpress.XtraBars.PopupControlContainer popupControlContainer1;
         private DevExpress.XtraEditors.LabelControl someLabelControl2;
         private DevExpress.XtraEditors.LabelControl someLabelControl1;
-        private DevExpress.XtraBars.PopupControlContainer popupControlContainer2;
-        private DevExpress.XtraEditors.ButtonEdit buttonEdit;
         private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar;
         private DevExpress.Utils.ImageCollection ribbonImageCollection;
         private DevExpress.Utils.ImageCollection ribbonImageCollectionLarge;
@@ -778,5 +767,8 @@
         private DevExpress.XtraBars.BarButtonItem iLoadEBRViewerForm;
         private DevExpress.XtraBars.Ribbon.RibbonPage ExcelRibbonPage;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ExcelRibbonPageGroup;
+        private DevExpress.XtraBars.BarButtonItem iLoadPDFViewerForm;
+        private DevExpress.XtraBars.Ribbon.RibbonPage PDFRibbonPage;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup PDFRibbonPageGroup;
     }
 }

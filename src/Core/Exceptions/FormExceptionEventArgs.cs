@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Presentation.Views.Excel
+namespace Core.Exceptions
 {
     public class FormExceptionEventArgs : EventArgs
     {

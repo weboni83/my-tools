@@ -9,9 +9,11 @@ using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
+using DevExpress.XtraBars.Docking2010.Views.WindowsUI;
+using DevExpress.XtraBars.Docking2010.Customization;
 using Presentation.Views.Upgrade;
-using static DevExpress.XtraExport.Helpers.TableRowControl;
 using Presentation.Views.Excel;
+using Presenter.Views.PDF;
 
 namespace ExcelToSQL
 {
@@ -29,6 +31,7 @@ namespace ExcelToSQL
             CONVERT_SQL = 65,
             LOAD_UPGRADE_FORM = 66,
             LOAD_ERBVIEWER_FORM = 67,
+            LOAD_PDFVIEWER_FORM = 68,
         }
         public FrmMain()
         {
@@ -80,8 +83,16 @@ namespace ExcelToSQL
                         formEBR.Controls.Add(uctrl);
                         formEBR.Show();
                         break;
+                    case (int)BUTTON.LOAD_PDFVIEWER_FORM:
+                        var uctrlPdf = new Viewer() { Dock = DockStyle.Fill };
+                        uctrlPdf.ExceptionTrigger += (s1, e1) => { MessageShowOK(e1.Message); };
+                        Form formPDF = new Form();
+                        formPDF.Size = new Size(1024, 768);
+                        formPDF.Controls.Add(uctrlPdf);
+                        formPDF.Show();
+                        break;
                     default:
-                        DevExpress.XtraBars.Docking2010.Customization.FlyoutDialog.Show(this, e.Item.Id.ToString(), MessageBoxButtons.OK);
+                        MessageShowOK(e.Item.Id.ToString());
                         break;
                 }
 
@@ -96,7 +107,7 @@ namespace ExcelToSQL
                 }
                 catch (Exception ex)
                 {
-                    DevExpress.XtraBars.Docking2010.Customization.FlyoutDialog.Show(this, ex.Message, MessageBoxButtons.OK);
+                    MessageShowOK(ex.Message);
                 }
                 finally
                 {
@@ -133,13 +144,76 @@ namespace ExcelToSQL
 
             this.FormClosing += (s, e) =>
             {
-                SqlDependency.Stop(CONNECTION_STRING);
+                try
+                { 
+                    SqlDependency.Stop(CONNECTION_STRING);
+                }
+                catch (Exception ex)
+                {
+                    MessageShowOK(ex.Message);
+                }
+                finally
+                {
+
+                }
             };
         }
 
         void MessageShowOK(string message)
         {
-            DevExpress.XtraBars.Docking2010.Customization.FlyoutDialog.Show(this, message, MessageBoxButtons.OK);
+            FlyoutAction action = new FlyoutAction() { Caption = "확인", Description = message };
+            Predicate<DialogResult> predicate = canCloseFunc;
+            FlyoutCommand command1 = new FlyoutCommand() { Text = "Close", Result = System.Windows.Forms.DialogResult.Yes };
+            FlyoutCommand command2 = new FlyoutCommand() { Text = "Cancel", Result = System.Windows.Forms.DialogResult.No };
+            action.Commands.Add(command1);
+            action.Commands.Add(command2);
+            FlyoutProperties properties = new FlyoutProperties();
+            properties.ButtonSize = new Size(200, 40);
+            properties.Style = FlyoutStyle.MessageBox;
+            properties.AppearanceDescription.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap;
+
+            const int AUTO_CLOSE_INTERVAL = 10;
+            // button 은 document usercontrol 로 구성
+            var button = new Button() { Text = $"AUTO CLOSE ({AUTO_CLOSE_INTERVAL})" };
+            button.Size = new Size(200, 40);
+
+            Timer timer = new Timer();
+            timer.Interval = 1000;
+
+            FlyoutDialog flyoutDialog = new FlyoutDialog(this, "확인", button, MessageBoxButtons.OK);
+            button.Click += (s, e) => {
+                flyoutDialog.Close();
+                timer.Stop();
+            };
+
+
+            int count = 0;
+            int msec = 0;
+            timer.Tick += (s, e) =>
+            {
+                msec += timer.Interval;
+                button.Text = $"{message} ({AUTO_CLOSE_INTERVAL - count++})";
+                if(msec > AUTO_CLOSE_INTERVAL * 1000)
+                    flyoutDialog.Close();
+            };
+            timer.Start();
+
+            flyoutDialog.Show(this);
+
+            //var result = FlyoutDialog.Show(this, action, properties, predicate);
+            //if(result != DialogResult.OK)
+            //    return;
+
+
+
+
+
+            //DevExpress.XtraBars.Docking2010.Customization.FlyoutDialog.Show(this, message, MessageBoxButtons.OK);
+        }
+
+        private bool canCloseFunc(DialogResult parameter)
+        {
+            return parameter != DialogResult.Cancel;
         }
 
         void InitSkinGallery()
@@ -187,7 +261,7 @@ ORDER BY SEND_DT DESC
         {
             if(e.Info.ToString().StartsWith("Invalid")) // 에러
             {
-                DevExpress.XtraBars.Docking2010.Customization.FlyoutDialog.Show(this, e.Info.ToString(), MessageBoxButtons.OK);
+                MessageShowOK(e.Info.ToString());
                 return;
             }
 
@@ -226,7 +300,7 @@ ORDER BY SEND_DT DESC
             }
             catch(Exception e)
             {
-                DevExpress.XtraBars.Docking2010.Customization.FlyoutDialog.Show(this, e.Message, MessageBoxButtons.OK);
+                MessageShowOK(e.Message);
             }
             finally
             {
@@ -333,7 +407,7 @@ ORDER BY SEND_DT DESC
             }
             catch (Exception e)
             {
-                DevExpress.XtraBars.Docking2010.Customization.FlyoutDialog.Show(this, e.Message, MessageBoxButtons.OK);
+                MessageShowOK(e.Message);
             }
             finally
             {
@@ -361,7 +435,7 @@ ORDER BY SEND_DT DESC
             }
             catch (Exception e)
             {
-                DevExpress.XtraBars.Docking2010.Customization.FlyoutDialog.Show(this, e.Message, MessageBoxButtons.OK);
+                MessageShowOK(e.Message);
             }
             finally
             {

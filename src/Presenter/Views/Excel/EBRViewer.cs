@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Drawing;
 using System.Diagnostics;
+using DevExpress.XtraSplashScreen;
+using Core.Exceptions;
 
 namespace Presentation.Views.Excel
 {
@@ -79,7 +81,17 @@ ORDER BY order_process_seq, ISNULL(added_page_no, 0)
                 if(command is null)
                     return;
 
-                SelectCommand(command);
+                SplashScreenManager.ShowForm(this.ParentForm, typeof(SplashScreenForm), true, true, false);
+                try
+                {
+                    SplashScreenManager.Default.SendCommand(SplashScreenForm.SplashScreenCommand.SetMessage, "조회");
+                    SelectCommand(command);
+                }
+                finally
+                {
+
+                    SplashScreenManager.CloseForm(false);
+                }
             };
 
             this.dockPanel_pdfViewer.CustomButtonClick += (s, e) =>

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Presentation.Views.Excel
 {
@@ -12,6 +10,12 @@ namespace Presentation.Views.Excel
         private readonly T _value;
         private readonly List<TreeNode<T>> _children = new List<TreeNode<T>>();
 
+        /// <summary>
+        /// 사용 방법: 
+        /// var five = myTree.AddChild(5); 
+        /// myTree.InsertChild(five, 55);
+        /// </summary>
+        /// <param name="value">Any</param>
         public TreeNode(T value)
         {
             _value = value;
@@ -66,6 +70,6 @@ namespace Presentation.Views.Excel
             parent._children.Add(node);
             return node;
         }
-        //var five = myTree.AddChild(5); myTree.InsertChild(five, 55);
+
     }
 }

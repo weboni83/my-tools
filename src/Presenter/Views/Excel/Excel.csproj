@@ -8,8 +8,8 @@
     <ProjectGuid>{FB5D7724-353A-4E94-AD39-54336021AC7B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Presentation.Views.Excel</RootNamespace>
-    <AssemblyName>Presentation.Views.Excel</AssemblyName>
+    <RootNamespace>Presenter.Views.Excel</RootNamespace>
+    <AssemblyName>Presenter.Views.Excel</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -81,10 +81,15 @@
     <Compile Include="EBRViewer.Designer.cs">
       <DependentUpon>EBRViewer.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormExceptionEventArgs.cs" />
     <Compile Include="ICommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SelectCommand.cs" />
+    <Compile Include="SplashScreenForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SplashScreenForm.Designer.cs">
+      <DependentUpon>SplashScreenForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="TreeNode.cs" />
     <EmbeddedResource Include="EBRViewer.resx">
       <DependentUpon>EBRViewer.cs</DependentUpon>
@@ -100,6 +105,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="SplashScreenForm.resx">
+      <DependentUpon>SplashScreenForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -111,6 +119,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\Core.csproj">
+      <Project>{5797d9da-2a2a-49fd-aba8-8ea52fe4f6bf}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\ViewModels\ViewModels.csproj">
       <Project>{f3a1f85f-ebbf-49f1-ba2c-922c8d7dcb3c}</Project>
       <Name>ViewModels</Name>
