@@ -121,7 +121,11 @@ namespace ExcelToSQL
 
             this.Shown += (s, e) =>
             {
+                var loginForm = new FrmLogin();
+                var result = loginForm.ShowDialog();
 
+                if(result != DialogResult.OK)
+                    throw new Exception("로그인 실패");
             };
 
             this.MouseMove += (s, e) =>
