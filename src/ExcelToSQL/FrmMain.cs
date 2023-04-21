@@ -178,17 +178,17 @@ namespace ExcelToSQL
 
             const int AUTO_CLOSE_INTERVAL = 10;
             // button 은 document usercontrol 로 구성
-            var button = new Button() { Text = $"AUTO CLOSE ({AUTO_CLOSE_INTERVAL})" };
-            button.Size = new Size(200, 40);
+            //var button = new Button() { Text = $"AUTO CLOSE ({AUTO_CLOSE_INTERVAL})" };
+            //button.Size = new Size(200, 40);
 
             Timer timer = new Timer();
             timer.Interval = 1000;
 
-            FlyoutDialog flyoutDialog = new FlyoutDialog(this, "확인", button, MessageBoxButtons.OK);
-            button.Click += (s, e) => {
-                flyoutDialog.Close();
-                timer.Stop();
-            };
+            //FlyoutDialog flyoutDialog = new FlyoutDialog(this, action, button, properties, true);
+            //button.Click += (s, e) => {
+            //    flyoutDialog.Close();
+            //    timer.Stop();
+            //};
 
 
             int count = 0;
@@ -196,23 +196,25 @@ namespace ExcelToSQL
             timer.Tick += (s, e) =>
             {
                 msec += timer.Interval;
-                button.Text = $"{message} ({AUTO_CLOSE_INTERVAL - count++})";
+                action.Commands.Remove(command1);
+                action.Commands.Remove(command2);
+                var caption = $"{message} ({AUTO_CLOSE_INTERVAL - count++})";
+                command1 = new FlyoutCommand() { Text = caption, Result = System.Windows.Forms.DialogResult.Yes };
+                action.Commands.Add(command1);
+                action.Commands.Add(command2);
+                //button.Text = $"{message} ({AUTO_CLOSE_INTERVAL - count++})";
                 if(msec > AUTO_CLOSE_INTERVAL * 1000)
-                    flyoutDialog.Close();
+                    command1.Result = DialogResult.Yes;
             };
             timer.Start();
 
-            flyoutDialog.Show(this);
+            //flyoutDialog.Show(this);
 
-            //var result = FlyoutDialog.Show(this, action, properties, predicate);
-            //if(result != DialogResult.OK)
-            //    return;
+            var result = FlyoutDialog.Show(this, action, properties, predicate);
+            if(result != DialogResult.Yes)
+                return;
+            
 
-
-
-
-
-            //DevExpress.XtraBars.Docking2010.Customization.FlyoutDialog.Show(this, message, MessageBoxButtons.OK);
         }
 
         private bool canCloseFunc(DialogResult parameter)

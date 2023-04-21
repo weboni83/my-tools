@@ -235,7 +235,9 @@ ORDER BY order_process_seq, ISNULL(added_page_no, 0)
                         Console.WriteLine($"IDX:{subNOCell.RowIndex}, {findedNode.Value.Description} => LogicalNO:{findedNode.Value.Chapter}.{no} PysicalNO:{cursorNO}, MAX:{findedNode.Children.Max(m=> m.Value.PysicalNumber)}");
                     }
 
-                    if(subNOCell.Value.TextValue == PAGE_PREAKE_TEXT)
+                    var textValue = subNOCell.Value.TextValue?.Trim();
+
+                    if(textValue == PAGE_PREAKE_TEXT)
                     {
                         cursorNO++;
                         //findedNode.Children.ToList().ForEach(p => p.Value.PysicalNumber = findedNode.Value.PysicalNumber);
